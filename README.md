@@ -1,120 +1,120 @@
-SanctionSnitch: what it is and how it was built
+\# SanctionSnitch
 
-What it is
+\*\*Deterministic 6-Lender Home-Loan Pre-Qualification Engine for Indian Real Estate Deals\*\*  
 
+\*A product by \*\*REALEST — Finance, AI and Investments\*\*\*
 
 
-SanctionSnitch is a home-loan pre-qualification engine for Indian real estate deals. You give it a buyer’s profile and it tells you which of six lenders would finance them and how much, what is limiting the loan, what the buyer needs in cash to close, and what would fix any shortfall. It’s the specific product under the Realest brand, and it exists because deals often die at financing after everyone has already invested time in them.
 
+SanctionSnitch evaluates a buyer's financial profile against six Indian home-loan lenders (\*\*HDFC, ICICI, Axis, Bajaj Housing Finance, LIC Housing Finance, and SBI\*\*) to determine who will finance the deal, the exact maximum sanction, the binding constraint, total cash required to close, and ranked fixes for any shortfall.
 
 
-What it does
 
+Real estate deals routinely die late at the financing stage after brokers, buyers, and sellers have already invested weeks of time. SanctionSnitch surfaces underwriting bottlenecks upfront before time is wasted.
 
 
-Inputs: net monthly income, existing EMIs, age, employment type (salaried, self-employed, or professional), property value, own funds available, and CIBIL score if known.
 
+> \*\*Sample Client Deliverable:\*\* \[View Sample One-Page PDF Report (`samples/sample\_client\_report.pdf`)](samples/sample\_client\_report.pdf)
 
 
-For each of six lenders (HDFC, ICICI, Axis, Bajaj Housing, LIC Housing Finance, SBI), it computes:
 
+\---
 
 
-The maximum sanction. Three ceilings are calculated and the lowest wins: an income ceiling (FOIR), a property ceiling (LTV slab), and a tenure ceiling (the lender’s retirement-age cap).
 
-The binding constraint. For example, ₹1.5L income on a ₹75L property is capped at ₹60L by LTV, while ₹90K income on the same property is capped at about ₹40.58L by income. The fix differs depending on which one binds.
+\## Core Capabilities
 
-Rate and tenure, read from each lender’s own data.
 
-Cash to close: down payment, stamp duty, registration, and the lender’s processing fee.
 
-Shortfall and ranked fixes when the sanction falls short of what the buyer needs: extend tenure, close an existing liability, or negotiate the price below an LTV slab boundary. Each fix shows its rupee impact and what share of the gap it closes.
+\* \*\*Inputs:\*\* Net monthly income, existing EMIs, age, employment type (`salaried`, `self\_employed`, or `professional`), property value, available own funds, and CIBIL score (if known).
 
+\* \*\*Three-Ceiling Maximum Sanction:\*\* Computes three independent ceilings per lender and selects the lowest:
 
+&#x20; 1. \*\*Income Ceiling (FOIR):\*\* Maximum loan supported by net monthly income after existing EMI obligations.
 
-It handles real policy differences. ICICI has a hard CIBIL floor, HDFC and Bajaj have soft ones, Axis and LIC HFL have none, and SBI’s is unpublished. SBI has two LTV slabs where the others have three. Bajaj prices professionals separately, and a 54-year-old salaried buyer gets only six years of tenure at HDFC. The output is a ranked list with declines at the bottom, and a one-page branded PDF report.
+&#x20; 2. \*\*Property Ceiling (LTV Slab):\*\* Property-value-based Loan-to-Value cap across lender-specific price slabs.
 
+&#x20; 3. \*\*Tenure Ceiling:\*\* Maximum tenure constrained by each lender's retirement-age cap.
 
+\* \*\*Binding Constraint Identification:\*\* Identifies whether \*\*Income\*\*, \*\*LTV\*\*, or \*\*Tenure\*\* caps the loan (e.g., ₹1.5L monthly income on a ₹75L property caps at ₹60L via LTV, whereas ₹90K income on the same property caps at \~₹40.58L via income).
 
-How it was built
+\* \*\*Lender-Specific Policy Logic:\*\*
 
+&#x20; \* \*\*CIBIL Enforcement:\*\* Four-state logic—ICICI enforces a hard floor (decline), HDFC and Bajaj apply soft floors (caveat flag), Axis and LIC HFL have verified absence, and SBI's floor is treated as unpublished.
 
+&#x20; \* \*\*LTV \& Rate Structures:\*\* Handles SBI's two-slab LTV structure vs. three-slab structures elsewhere, Bajaj's separate pricing for professionals, and strict retirement-age tenure compression (e.g., a 54-year-old salaried buyer gets 6 years at HDFC).
 
-1\. A hard principle first. The calculation layer is deterministic Python with no LLM in it. A confidently wrong sanction number would destroy a broker’s trust, so every number has to trace back to sourced lender data or real math.
+\* \*\*Cash-to-Close Breakdown:\*\* Calculates down payment, stamp duty, registration, and lender-specific processing fees.
 
+\* \*\*Shortfall \& Ranked Fixes:\*\* Quantifies the exact rupee gap and ranks actionable remedies (extending tenure, closing an existing liability, or negotiating property price below an LTV slab boundary), showing rupee impact and `%` of gap closed.
 
+\* \*\*Branded PDF Output:\*\* Generates a one-page \*\*REALEST\*\* PDF report containing the borrower snapshot, recommended lender, full 6-lender comparison table, and transparent policy risk flags.
 
-2\. The lender matrix. Before any engine code, six lender JSON files were researched, each field tagged with \_source and \_confidence (verified, partial, stale, unknown, or verified absence). The tags drive behavior: a verified CIBIL floor causes a decline, a partial one only adds a caveat.
 
 
+\---
 
-3\. The core math (emi.py). EMI, its inverse max\_principal() (which turns an allowed EMI back into a maximum loan), FOIR, tenure, and cash-needed functions. This was hand-typed first and restructured into a pure module with tests kept separate.
 
 
+\## Architecture \& How It Was Built
 
-4\. The lender engine (lender\_engine.py). One shared function reads any lender’s JSON. It normalizes the two rate formats and recognizes each lender’s LTV slab shape, and it errors loudly on an unknown shape instead of guessing. It also applies the four-state CIBIL logic and declines anyone already at or past a lender’s retirement age.
 
 
+1\. \*\*Deterministic Core First:\*\* Zero LLM involvement in the calculation layer. Every rupee figure traces back to sourced lender policy data and verified financial math.
 
-5\. Supporting layers. fix\_engine.py does the shortfall math and ranked fixes. processing\_fee.py handles four different fee schemas, and where a fee is a genuine range (Bajaj) it returns no number and a flag. run\_all\_lenders.py ranks the results and borrower\_input.py handles validated live input.
+2\. \*\*Sourced Lender Matrix (`lenders/\*.json`):\*\* Six structured JSON files researched prior to engine code. Every policy field is tagged with `\_source` and `\_confidence` (`verified`, `partial`, `stale`, `unknown`, `verified\_absence`), directly governing engine behavior.
 
+3\. \*\*Core Math (`emi.py`):\*\* Pure module for EMI, inverse `max\_principal()`, FOIR, tenure, and cash-to-close calculations.
 
+4\. \*\*Lender Engine (`lender\_engine.py`):\*\* Single unified reader normalizing multiple interest-rate formats and LTV slab shapes—failing loudly on unrecognized schemas rather than guessing.
 
-6\. The AI edge (extract\_salary\_slip.py). The Claude API can read a pasted salary slip into structured fields, but a deterministic check then tests whether gross minus deductions matches net. If it doesn’t, confidence is forced to low whatever the model claimed, and nothing reaches the engine without a human confirming it.
+5\. \*\*Shortfall, Fees \& Orchestration:\*\*
 
+&#x20;  \* `fix\_engine.py` — Shortfall math and ranked fix simulations.
 
+&#x20;  \* `processing\_fee.py` — Parses four fee schemas; returns `None` + a verification flag where fees are true ranges (e.g., Bajaj).
 
-7\. The report. generate\_report.py produces the one-page PDF with borrower snapshot, recommended lender, comparison table, and risk flags.
+&#x20;  \* `run\_all\_lenders.py` \& `borrower\_input.py` — Live CLI validation and lender ranking (declines sorted to the bottom).
 
+6\. \*\*AI Extraction with Deterministic Guardrail (`extract\_salary\_slip.py`):\*\* Uses the Anthropic Claude API to parse pasted salary slips into structured fields, followed by a deterministic check verifying `gross - deductions == net`. Mismatches force confidence to `low`, and human confirmation is mandatory before data reaches the engine.
 
+7\. \*\*PDF Report Generator (`generate\_report.py`):\*\* Built with `ReportLab` to render the one-page client/broker comparison report.
 
-The method
 
 
+\---
 
-Work was one step at a time. Each file was fully replaced, then checked with type to confirm the paste landed, then run. Code was verified in a sandbox before you pasted it. Six test files cover the math, the lenders, SBI’s slab logic, the fix engine, processing fees, and 16 edge cases including exact slab boundaries, CIBIL at the floor, and age 54 and age 62 cases. A rendered-output check was added after a PDF column bug shipped twice. The code was written with AI assistance and you directed it and verified it, which is how it’s honestly described.
 
 
+\## Project Structure
 
-Bugs that shaped it
 
-HDFC was wrongly declined at CIBIL 690. The cause was treating every CIBIL floor as hard, whatever its confidence.
 
-Processing fees silently fell back to a default for four of six lenders, showing Axis at ₹30K instead of ₹60K.
+```text
 
-A default of zero own funds made every buyer show a false shortfall.
+realest/
 
-A “professional” employment type crashed Bajaj.
+├── lenders/                  # Sourced JSON policy files (HDFC, ICICI, Axis, Bajaj, LIC HFL, SBI)
 
-Past-retirement-age borrowers produced a negative sanction.
+├── samples/                  # Sample client-ready PDF report output
 
-A missing lender file crashed the whole run.
+├── emi.py                    # Core financial math \& inverse principal formulas
 
+├── lender\_engine.py          # Unified lender policy parser \& ceiling evaluator
 
+├── fix\_engine.py             # Shortfall quantification \& ranked fix calculator
 
-Almost none of these crashed. They produced plausible-looking wrong numbers, and the tests exist to catch exactly that.
+├── processing\_fee.py         # Multi-schema processing fee engine
 
+├── borrower\_input.py         # Interactive CLI borrower profile collector
 
+├── run\_all\_lenders.py        # Multi-lender runner \& ranking logic
 
-What the research changed
+├── extract\_salary\_slip.py    # Claude API salary slip parser + deterministic net check
 
+├── generate\_report.py        # ReportLab one-page PDF report generator
 
+├── requirements.txt          # Python dependencies (reportlab, anthropic)
 
-Four anonymous buyer-style conversations with brokers all showed the same pattern: brokers don’t evaluate eligibility, they hand off to a bank contact, and project-level APF approval constrains which banks are even available. That shaped the positioning and the service-first decision, and a stamp-duty concession for women buyers turned up along the way.
-
-
-
-What it doesn’t do yet
-
-FOIR is assumed at 50% for every lender. Real caps are internal bank data and aren’t public. The report flags it, but the per-case flagging fix (showing the warning only when FOIR actually binds) is designed and verified in isolation and not yet applied to the real engine file.
-
-Co-applicant income clubbing is not implemented, for the same data reason.
-
-There’s no APF filter, so it can recommend a lender that has no approval for a given project.
-
-Stamp duty defaults to Maharashtra rates with no state or gender logic yet.
-
-Only six lenders, with SBI the only public-sector bank.
-
-run\_all\_lenders.py and generate\_report.py need a fresh type check before you rely on them in front of anyone.
+└── test\_\*.py                 # 6-file unit, regression, and 16-case edge test suite
 

@@ -1,6 +1,7 @@
 __pycache__/
 *.pyc
 *.pdf
+!samples/*.pdf
 .env
 venv/
 .venv/
