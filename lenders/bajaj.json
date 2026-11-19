@@ -1,0 +1,77 @@
+{
+  "lender": "BAJAJ",
+  "last_verified": "2026-08-07",
+  "ltv_slabs": {
+    "upto_30L": 0.90,
+    "30L_to_75L": 0.80,
+    "above_75L": 0.75,
+    "_note": "RBI standard three-slab. Boundaries <=30L, 30-75L, >75L, on property value. NOTE: Bajaj is an HFC - some HFCs stretch LTV higher than banks; this page only states generic RBI ceiling, not Bajaj-specific policy. Confirm Bajaj's actual max on product page/DSA.",
+    "_source": "Bajaj Housing resource page on LTV (bajajhousingfinance.in) - describes RBI standard, not Bajaj-specific.",
+    "_confidence": "partial"
+  },
+  "max_tenure_years": {
+    "value": 30,
+    "_source": "HDFC home loan page",
+    "_confidence": "verified"
+  },
+ "retirement_age": {
+    "salaried": 67,
+    "self_employed": 70,
+    "_source": "Bajaj Housing Finance eligibility page (bajajhousingfinance.in)",
+    "_confidence": "verified",
+    "_note": "Salaried 67, self-employed/professional 70 at maturity. More generous than most banks on salaried (beats HDFC 60, ICICI 65, Axis 65; below SBI 70). HFC flexibility. Co-applicant can extend for older applicants."
+  },
+  "min_cibil": {
+    "value": 725,
+    "preferred": 750,
+    "_source": "Bajaj insights/blog article (bajajfinserv.in) - NOT the eligibility criteria page",
+    "_confidence": "partial",
+    "_note": "Blog states 725 min, 750+ ideal for best rates (7.25%). 725-749 = additional evaluation, not auto-approve. TENSION: this looks stricter than banks, yet Bajaj's rate goes to 20% (only makes sense if it lends to weak profiles). Likely 725 is standard-product soft floor; sub-725 underwritten case-by-case at high rates, OR via other products. Blog-tier, soft figure. DSA-gated: confirm Bajaj's real hard floor and how the 20% borrowers qualify."
+  },
+  "processing_fee": {
+    "pct_min": 0.0025,
+    "pct_typical_max": 0.02,
+    "pct_absolute_max": 0.04,
+    "gst": 0.18,
+    "_note": "HFC wide range: 0.25%-2% typical, up to 4% for weak profiles + 18% GST. FAR higher ceiling than banks (HDFC/ICICI 0.5%, Axis 1%). Negotiable down toward 0.25% for 750+ CIBIL / strong profile / existing customer / promo. Same HFC pattern as rate: cheap for prime, expensive for risky. Other charges deferred.",
+    "_source": "Bajaj Housing Finance home loan fees page (bajajhousingfinance.in)",
+    "_confidence": "verified"
+  },
+  "rate_band": {
+    "salaried_min": 0.0725,
+    "salaried_max": 0.20,
+    "self_employed_min": 0.0770,
+    "self_employed_max": 0.20,
+    "professional_min": 0.0730,
+    "professional_max": 0.20,
+    "repo_verified": "2026-08-07",
+    "_note": "HFC structure: prime floor competitive (salaried 7.25% ties SBI as lowest), but ceiling 20% - FAR above any bank (HDFC 13.2, ICICI 9.8, Axis 9.1, SBI 8.55). This IS the HFC model: lends to weak/thin profiles banks decline, at punishing rates. Self-employed floor 7.70% (premium vs salaried). Repo-linked.",
+    "_source": "Bajaj Housing Finance home loan rate page (bajajhousingfinance.in)",
+    "_confidence": "verified"
+  },
+  "foir_by_income_band": {
+    "_note": "FOIR cap varies by income - proprietary, DSA-gated",
+    "band_low": null,
+    "band_mid": null,
+    "band_high": null,
+    "_source": null,
+    "_confidence": "unknown"
+  },
+  "accepted_income_proofs": {
+    "salaried": ["3-6 months salary slips", "Form 16 or ITR 2-3 years", "6 months bank statement (salary credits + EMI deductions)", "Employment stability proof - salary certificate/appointment/increment letter, min 3 yrs work stability"],
+    "self_employed_professional": ["Audited P&L + Balance Sheet 2-3 years (CA certified)", "ITR + computation of income 2-3 years", "6 months business bank statement", "Business continuity proof (GST/Trade License/Incorporation) - min 3-5 yrs vintage"],
+    "self_employed_non_professional": ["Audited P&L + Balance Sheet 2-3 years (CA certified)", "ITR + computation of income 2-3 years", "6 months business bank statement", "Business existence proof (GST/Trade License/Partnership Deed/ROC) - min 3-5 yrs vintage"],
+    "_note": "From official Bajaj docs pages. HFC asks a RANGE (2-3 yrs ITR/financials) - more flexible than fixed bank requirements. Requires MIN 3 YRS work stability (salaried) and 3-5 YRS business vintage (self-employed) - stricter on stability/vintage than some banks. NRI docs exist, not modeled.",
+    "_source": "Bajaj Finserv + Bajaj Housing Finance docs pages (bajajfinserv.in, bajajhousingfinance.in)",
+    "_confidence": "verified"
+  },
+  "co_applicant_clubbing": {
+    "allowed_relationships": null,
+    "income_clubbing_pct": null,
+    "co_applicant_liabilities_included": null,
+    "must_be_co_owner": null,
+    "_note": "Key remediation lever for FOIR-bound buyers. Clubbing spouse/parent income raises FOIR base. Haircut % and allowed relationships are lender-specific - DSA-gated. Co-applicant's own EMIs usually also clubbed.",
+    "_source": null,
+    "_confidence": "unknown"
+  }
+}

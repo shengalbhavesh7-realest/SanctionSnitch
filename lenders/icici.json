@@ -1,0 +1,71 @@
+{
+  "lender": "ICICI",
+  "last_verified": "2026-08-05",
+  "ltv_slabs": {
+    "upto_30L": 0.90,
+    "30L_to_75L": 0.80,
+    "above_75L": 0.75,
+    "_note": "slab based on PROPERTY VALUE; % is max loan of that value. Boundaries: <=30L, 30-75L, >75L. Matches RBI standard.",
+    "_source": "ICICI blog - actual cost of buying a house (icici.bank.in)",
+    "_confidence": "verified"
+  },
+  "max_tenure_years": {
+    "value": 30,
+    "_source": "ICICI home loan eligibility page (icici.bank.in)",
+    "_confidence": "verified",
+    "_note": "Max 30 years, subject to max age at maturity limits"
+  },
+  "retirement_age": {
+    "salaried": 65,
+    "self_employed": 70,
+    "_source": "ICICI home loan eligibility page (icici.bank.in/personal-banking/loans/home-loan)",
+    "_confidence": "verified",
+    "_note": "Max age at maturity: 65 salaried, 70 self-employed. DIFFERS from HDFC (60/65) - ICICI allows older borrowers longer tenure = higher eligibility for older applicants."
+  },
+  "min_cibil": {
+    "value": 700,
+    "_source": "ICICI home loan eligibility page (icici.bank.in/personal-banking/loans/home-loan)",
+    "_confidence": "verified"
+  },
+  "processing_fee": {
+    "pct": 0.005,
+    "_note": "0.5% of loan amount for standard home loans (per rate page). Service-charges page states 'up to 2%' as ceiling - 0.5% is the actual home-loan rate. Other charges (legal, admin, valuation, prepayment) exist - deferred to full fee-schedule layer.",
+    "_source": "ICICI home loan interest rate page (icici.bank.in)",
+    "_confidence": "verified"
+  },
+  "rate_band": {
+    "repo_rate": 0.0525,
+    "repo_verified": "2026-08-05",
+    "headline_min": 0.0750,
+    "effective_min": 0.0850,
+    "effective_max": 0.0980,
+    "_note": "CONTRADICTORY SOURCE (2026-08-05): headline says 'Aug 2026 from 7.50%' but standard rate table says 'valid till 31 July 2026, 8.50-9.80%'. Table appears un-refreshed. Emailed ICICI for clarification. MUST re-verify. Repo-linked.",
+    "_source": "ICICI home loan interest rate page (icici.bank.in) - internally inconsistent dates",
+    "_confidence": "stale"
+  },
+  "foir_by_income_band": {
+    "_note": "FOIR cap varies by income - proprietary, DSA-gated",
+    "band_low": null,
+    "band_mid": null,
+    "band_high": null,
+    "_source": null,
+    "_confidence": "unknown"
+  },
+  "accepted_income_proofs": {
+    "salaried": ["Latest month salary slip (or appointment letter)", "3 months bank statement (waived for ICICI account holders)", "other income proofs if any (rental, dividend, interest)"],
+    "self_employed_professional": ["ITR 2 years", "Balance sheet, P&L, computation of income, audit report (CA cert only for audited financials)", "GST returns 12 months if applicable", "6 months bank statement", "business profile"],
+    "self_employed_non_professional": ["3 years ITR with computation of income", "3 years CA-certified/audited balance sheet and P&L", "Form 16 or ITR", "6 months bank statement", "proof of business existence", "business profile"],
+    "_note": "ICICI splits self-employed into professional vs non-professional (HDFC does too). Real differences from HDFC: ICICI salaried needs only 1 month slip + 3 months statement (HDFC wanted 3 slips + 6 months); ICICI waives statement for its own account holders; ICICI non-professional needs 3 years ITR+financials vs 2.",
+    "_source": "ICICI documents required page (icici.bank.in)",
+    "_confidence": "verified"
+  },
+  "co_applicant_clubbing": {
+    "allowed_relationships": null,
+    "income_clubbing_pct": null,
+    "co_applicant_liabilities_included": null,
+    "must_be_co_owner": null,
+    "_note": "Key remediation lever for FOIR-bound buyers. Clubbing spouse/parent income raises FOIR base. Haircut % and allowed relationships are lender-specific - DSA-gated.",
+    "_source": null,
+    "_confidence": "unknown"
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "lender": "SBI",
+  "last_verified": "2026-08-06",
+  "ltv_slabs": {
+    "upto_20L": 0.90,
+    "above_20L": 0.80,
+    "_note": "SBI DIFFERS: only TWO slabs, boundary at Rs 20L (not 30L/75L like HDFC/ICICI). NO 75% slab - stays 80% even above 75L. On property, SBI lends more than private banks. LTV on assessed value.",
+    "_source": "SBI MITC document (sbi.bank.in)",
+    "_confidence": "verified"
+  },
+  "max_tenure_years": {
+    "value": 30,
+    "_source": "SBI home loan eligibility page (homeloans.sbi.bank.in)",
+    "_confidence": "verified"
+  }, 
+  "retirement_age": {
+    "salaried": 70,
+    "self_employed": 70,
+    "_source": "SBI home loan eligibility page (homeloans.sbi.bank.in)",
+    "_confidence": "verified",
+    "_note": "Max age at maturity 70 for ALL borrowers - SBI does not split salaried/self-employed. Most generous of the three (HDFC 60/65, ICICI 65/70). Older borrowers get most tenure at SBI."
+  },
+  "min_cibil": {
+    "value": null,
+    "aggregator_claim": {"below_650": "not eligible", "650_699": "conditional", "700_plus": "good"},
+    "_source": "SBI official eligibility page states NONE. Aggregator (mymudra.com) claims 650 floor - LOW TIER, unverified.",
+    "_confidence": "unknown",
+    "_note": "SBI's own page publishes no CIBIL minimum. Aggregator table (650 floor, 700+ good) is a third-party DSA site's inference, NOT SBI policy - do not trust as fact. DSA-gated: confirm SBI's real internal cutoff."
+  },
+  "processing_fee": {
+    "upto_25L_pct": 0.0025,
+    "25L_to_75L_flat": 10000,
+    "above_75L_flat": 20000,
+    "_note": "Tiered: 0.25% for <=25L, then flat Rs10,000 (25-75L), flat Rs20,000 (>75L). Much cheaper than HDFC/ICICI on mid-size loans. From MITC.",
+    "_source": "SBI MITC document (sbi.bank.in)",
+    "_confidence": "verified"
+  },
+  "rate_band": {
+    "eblr": 0.0790,
+    "effective_min": 0.0725,
+    "effective_max": 0.0855,
+    "effective_date": "2026-04-01",
+    "repo_verified": "2026-08-06",
+    "_note": "Home Loan (TL) standard rate 7.25-8.55%, EBLR-linked (EBLR=7.90%). Floating only, daily reducing balance. +10bps premium for non-salaried with CIBIL <825. LOWEST prime rate of the three lenders (SBI 7.25 vs HDFC 7.75 vs ICICI 8.50). PSU - cheaper on rate but typically slower/stricter approval.",
+    "_source": "SBI home loan interest rate page (sbi.bank.in)",
+    "_confidence": "verified"
+  },
+  "foir_by_income_band": {
+    "_note": "FOIR cap varies by income - proprietary, DSA-gated",
+    "band_low": null,
+    "band_mid": null,
+    "band_high": null,
+    "_source": null,
+    "_confidence": "unknown"
+  },
+ "accepted_income_proofs": {
+    "salaried": ["3 months salary slip or salary certificate", "Form 16 (2 years) or ITR (2 years)", "6 months bank statement (all accounts)", "1 year loan statement if existing loans"],
+    "self_employed_professional": ["ITR 3 years", "Balance sheet and P&L 3 years", "Business address proof", "Business license", "TDS certificate (Form 16A) if applicable", "Qualification certificate (CA/Doctor/professional)"],
+    "self_employed_non_professional": ["ITR 3 years", "Balance sheet and P&L 3 years", "Business address proof", "Business license", "TDS certificate (Form 16A) if applicable"],
+    "_note": "SBI does NOT split self-employed into prof/non-prof (calls all 'Non-Salaried'); prof/non-prof rows here are near-identical, differing only by the professional qualification cert. SBI requires 3 yrs ITR+financials for self-employed (vs HDFC/ICICI's 2). KYC waived for existing SBI KYC-compliant account holders - relationship advantage.",
+    "_source": "SBI documents required page (homeloans.sbi.bank.in)",
+    "_confidence": "verified"
+  },
+  "co_applicant_clubbing": {
+    "allowed_relationships": null,
+    "income_clubbing_pct": null,
+    "co_applicant_liabilities_included": null,
+    "must_be_co_owner": null,
+    "_note": "Key remediation lever for FOIR-bound buyers. Clubbing spouse/parent income raises FOIR base. Haircut % and allowed relationships are lender-specific - DSA-gated. Co-applicant's own EMIs usually also clubbed.",
+    "_source": null,
+    "_confidence": "unknown"
+  }
+}

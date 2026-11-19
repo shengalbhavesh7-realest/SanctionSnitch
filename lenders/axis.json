@@ -1,0 +1,75 @@
+{
+  "lender": "Axis",
+  "last_verified": "2026-08-06",
+  "ltv_slabs": {
+    "upto_30L": 0.90,
+    "30L_to_75L": 0.80,
+    "above_75L": 0.75,
+    "_note": "Standard RBI three-slab (same as HDFC/ICICI, unlike SBI's two-slab). Boundaries <=30L, 30-75L, >75L. On property value.",
+    "_source": "Axis blog on LTV (axis.bank.in) - describes RBI standard, values match RBI ceiling Axis follows.",
+    "_confidence": "verified"
+  },
+  "max_tenure_years": {
+    "value": 30,
+    "_source": "Axis blog + product brochure (axis.bank.in)",
+    "_confidence": "verified",
+    "_note": "Max 30 years, subject to max age at maturity (65) - whichever caps first"
+  },
+  "retirement_age": {
+    "salaried": 65,
+    "self_employed": 65,
+    "_source": "Axis product brochure + age-limit blog (axis.bank.in)",
+    "_confidence": "verified",
+    "_note": "Standard Home Loan: max age 65 for ALL. Salaried: 'under 65 or retirement whichever earlier'. VARIANTS DIFFER: Saakaar loan (Govt/Defense) goes to 75. Modeling Standard only. Strictest of four on standard product."
+  },
+  "min_cibil": {
+    "value": null,
+    "_source": "Axis rate page (axis.bank.in) - no hard floor stated",
+    "_confidence": "verified_absence",
+    "_note": "NO hard CIBIL floor. Rate page prices 'Between 750 and below / No credit history' at 8.20-9.10% - Axis LENDS to no-history borrowers, rate-loads rather than declines. Unlike ICICI's hard 700 gate; like HDFC's soft gradient. 751+ gets best rate."
+  },
+  "processing_fee": {
+    "pct": 0.01,
+    "min_flat": 10000,
+    "rule": "up to 1% or Rs 10,000, whichever HIGHER (floor) + GST",
+    "admin_charge": 0,
+    "_note": "Up to 1% or Rs10,000 whichever higher + GST. PRICIER than HDFC/ICICI (0.5%) and SBI (tiered flat) on larger loans. Admin charge Rs0. ASHA HL variant 1-2% not modeled. Other charges deferred.",
+    "_source": "Axis home loan fees page (axis.bank.in)",
+    "_confidence": "verified"
+  },
+  "rate_band": {
+    "effective_min": 0.0800,
+    "effective_max": 0.0910,
+    "cibil_751_plus": {"spread_min": 0.0275, "spread_max": 0.0360, "effective": "8.00-8.85"},
+    "cibil_750_below": {"spread_min": 0.0295, "spread_max": 0.0385, "effective": "8.20-9.10"},
+    "repo_verified": "2026-08-06",
+    "_note": "REPO-linked. CIBIL 751+ gets 8.00-8.85%; 750-or-below/no-history gets 8.20-9.10%. Prime rate 8.00% - between HDFC (7.75) and ICICI (8.50), above SBI (7.25). Narrow-banded like ICICI.",
+    "_source": "Axis home loan interest rate page (axis.bank.in)",
+    "_confidence": "verified"
+  },
+  "foir_by_income_band": {
+    "_note": "FOIR cap varies by income - proprietary, DSA-gated",
+    "band_low": null,
+    "band_mid": null,
+    "band_high": null,
+    "_source": null,
+    "_confidence": "unknown"
+  },
+  "accepted_income_proofs": {
+    "salaried": ["3 months pay slip", "6 months pay slip / 2 yrs bonus proof if variable pay", "6 months bank statement showing salary credits", "2 yrs Form 16 or employment continuity proof"],
+    "self_employed_professional": ["ITR 2 years with Computation, P&L, Balance Sheet (CA seal/sign)", "Tax Audit Report if turnover >1Cr or receipts >25L", "6 months bank statements (personal + business)", "Business continuity proof 3 yrs"],
+    "self_employed_non_professional": ["ITR 2 years with Computation, P&L, Balance Sheet (CA seal/sign)", "Tax Audit Report if turnover >1Cr or receipts >25L", "6 months bank statements (personal + business)", "Business continuity proof 3 yrs"],
+    "_note": "From Axis official brochure. Self-employed 2 yrs ITR (lighter than SBI's 3). Variable-pay rule: 2 yrs bonus proof if variable. Tax audit only if turnover>1Cr/receipts>25L. DEFERRED sub-cases: NRI, Balance Transfer, partner/director corporate docs, Asha HL (1yr ITR). Lease Rental Discounting out of scope.",
+    "_source": "Axis product brochure 'Mortgages Ready Reckoner' p7 (axis.bank.in)",
+    "_confidence": "verified"
+  },
+  "co_applicant_clubbing": {
+    "allowed_relationships": null,
+    "income_clubbing_pct": null,
+    "co_applicant_liabilities_included": null,
+    "must_be_co_owner": null,
+    "_note": "Key remediation lever for FOIR-bound buyers. Haircut % and allowed relationships lender-specific - DSA-gated.",
+    "_source": null,
+    "_confidence": "unknown"
+  }
+}

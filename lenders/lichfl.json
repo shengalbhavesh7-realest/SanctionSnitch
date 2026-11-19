@@ -1,0 +1,93 @@
+{
+  "lender": "LIC Housing Finance",
+  "last_verified": "2026-08-07",
+  "ltv_slabs": {
+    "upto_30L": 0.90,
+    "30L_to_75L": 0.80,
+    "above_75L": 0.75,
+    "_note": "Standard RBI three-slab. Boundaries <=30L, 30-75L, >75L, on property value. Confirmed on LIC HFL's own page (earlier synthesized source was mixed-tier; this is LIC-official).",
+    "_source": "LIC HFL official home loan page (lichousing.com)",
+    "_confidence": "verified"
+  },
+  "max_tenure_years": {
+    "value": 30,
+    "_source": "HDFC home loan page",
+    "_confidence": "verified"
+  },
+  "retirement_age": {
+    "salaried": 68,
+    "self_employed": 70,
+    "_source": "Mixed synthesis (LIC blog + aggregators) - NOT a single LIC-official eligibility page. Internally inconsistent.",
+    "_confidence": "partial",
+    "_note": "COMPLEX/UNCERTAIN. Standard salaried ~68 (retire + up to 10yrs post-retirement, max application age 50). Pensioners up to 70. With young co-applicant, tenure extends up to age 80. Sources conflicted (some said 60, some 68/70) and were mostly aggregators - NOT confirmed from single LIC HFL eligibility page. Verify on LIC HFL official page or DSA."
+  },
+  "min_cibil": {
+    "value": null,
+    "_source": "LIC HFL official rate card (lichousing.com) - prices CIBIL down to 201-599 and 101-200",
+    "_confidence": "verified_absence",
+    "_note": "NO hard CIBIL floor. Rate card explicitly prices CIBIL 201-599 (9.70-10.15%) and even 101-200 bands - LIC HFL LENDS to very poor CIBIL, rate-loads rather than declines. But ceiling ~10% (conservative HFC), unlike Bajaj's 20%. 825+ gets best 7.15%. Most CIBIL-inclusive of the six alongside Bajaj, but caps rate far lower than Bajaj."
+  },
+  "processing_fee": {
+    "salaried": {"pct": 0.005, "min_flat": 4000, "rule": "higher of pct or flat"},
+    "self_employed_professional": {"pct": 0.005, "min_flat": 4000, "rule": "higher of pct or flat"},
+    "self_employed_non_professional": {"pct": 0.015, "min_flat": 5000, "rule": "higher of pct or flat"},
+    "_note": "whichever is HIGHER (floor, not cap); plus applicable taxes. NRI/Value Plus/Reach schemes differ - not modeled yet. Other charges (legal, admin, valuation, prepayment) exist - deferred to full fee-schedule layer.",
+    "_source": "HDFC processing fee page (hdfc.com)",
+    "_confidence": "verified"
+  },
+  "rate_band": {
+    "salaried_min": 0.0715,
+    "salaried_max": 0.1015,
+    "self_employed_min": 0.0730,
+    "self_employed_max": 0.1030,
+    "cibil_bands_salaried": {
+      "825_plus": "7.15-7.45",
+      "800_824": "7.35-7.65",
+      "775_799": "7.50-7.80",
+      "750_774": "7.60-7.90",
+      "725_749": "7.80-8.10",
+      "700_724": "8.10-8.40",
+      "600_699": "8.90-9.65",
+      "201_599": "9.70-10.15"
+    },
+    "cibil_bands_self_employed": {
+      "825_plus": "7.30-7.60",
+      "800_824": "7.50-7.80",
+      "775_799": "7.65-7.95",
+      "750_774": "7.75-8.05",
+      "725_749": "7.95-8.25",
+      "700_724": "8.35-8.65",
+      "600_699": "9.15-9.80",
+      "201_599": "9.85-10.30"
+    },
+    "repo_verified": "2026-08-07",
+    "_note": "Full CIBIL x loan-slab matrix, both salaried and self-employed. Self-employed ~15-20bps premium over salaried per band. PRIME 7.15% salaried / 7.30% SE = LOWEST of all six. Lends down to CIBIL 201-599 (~10%) but ceiling ~10%, NOT Bajaj's 20% - conservative HFC. Rate rises as CIBIL drops / loan grows. Anomaly: CIBIL 150-200/101-149 rows priced lower (~7.8-8.4%), likely new-to-credit category.",
+    "_source": "LIC HFL official home loan rate card (lichousing.com)",
+    "_confidence": "verified"
+  },
+  "foir_by_income_band": {
+    "_note": "FOIR cap varies by income - proprietary, DSA-gated",
+    "band_low": null,
+    "band_mid": null,
+    "band_high": null,
+    "_source": null,
+    "_confidence": "unknown"
+  },
+ "accepted_income_proofs": {
+    "salaried": ["Salary slips", "Form 16", "6-12 months bank statement"],
+    "self_employed_professional": ["ITR 3 years", "Financial statements (P&L, balance sheet)", "6-12 months bank statement"],
+    "self_employed_non_professional": ["ITR 3 years", "Financial statements (P&L, balance sheet)", "6-12 months bank statement"],
+    "_note": "LIC HFL keeps docs lean/standard. Self-employed 3 years ITR (like SBI, heavier than HDFC/ICICI/Axis's 2). Bank statement 6-12 months. Does not split self-employed prof/non-prof on its page (kept uniform here for schema).",
+    "_source": "LIC HFL official documents page (lichousing.com)",
+    "_confidence": "verified"
+  },
+  "co_applicant_clubbing": {
+    "allowed_relationships": null,
+    "income_clubbing_pct": null,
+    "co_applicant_liabilities_included": null,
+    "must_be_co_owner": null,
+    "_note": "Key remediation lever for FOIR-bound buyers. Clubbing spouse/parent income raises FOIR base. Haircut % and allowed relationships are lender-specific - DSA-gated. Co-applicant's own EMIs usually also clubbed.",
+    "_source": null,
+    "_confidence": "unknown"
+  }
+}

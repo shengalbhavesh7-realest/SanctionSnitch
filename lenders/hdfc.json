@@ -1,0 +1,74 @@
+{
+  "lender": "HDFC",
+  "last_verified": "2026-08-04",
+  "ltv_slabs": {
+    "upto_30L": 0.90,
+    "30L_to_75L": 0.80,
+    "above_75L": 0.75,
+    "_note": "slab based on PROPERTY VALUE; % is max loan of that value. Boundaries: <=30L, 30-75L, >75L",
+    "_source": "HDFC home loan page (hdfc.com)",
+    "_confidence": "verified"
+  },
+  "max_tenure_years": {
+    "value": 30,
+    "_source": "HDFC home loan page",
+    "_confidence": "verified"
+  },
+  "retirement_age": {
+    "salaried": 60,
+    "self_employed": 65,
+    "_source": "HDFC home loan page",
+    "_confidence": "verified"
+  },
+  "min_cibil": {
+    "value": 700,
+    "preferred": 750,
+    "_source": "HDFC blog (homeloans.hdfc.bank.in) - NOT the official criteria page",
+    "_confidence": "partial",
+    "_note": "Blog states ~700 accepted with extra income checks, 720-750 typical, 750+ for best rates. SOFT gradient not a hard gate (unlike ICICI's stated 700 floor). Below 750 = rate-load rather than auto-decline. Needs official-page or DSA confirmation of true minimum."
+  },
+  "processing_fee": {
+    "salaried": {"pct": 0.005, "min_flat": 4000, "rule": "higher of pct or flat"},
+    "self_employed_professional": {"pct": 0.005, "min_flat": 4000, "rule": "higher of pct or flat"},
+    "self_employed_non_professional": {"pct": 0.015, "min_flat": 5000, "rule": "higher of pct or flat"},
+    "_note": "whichever is HIGHER (floor, not cap); plus applicable taxes. NRI/Value Plus/Reach schemes differ - not modeled yet. Other charges (legal, admin, valuation, prepayment) exist - deferred to full fee-schedule layer.",
+    "_source": "HDFC processing fee page (hdfc.com)",
+    "_confidence": "verified"
+  },
+  "rate_band": {
+    "repo_rate": 0.0525,
+    "repo_verified": "2026-08-04",
+    "spread_min": 0.025,
+    "spread_max": 0.0795,
+    "effective_min": 0.0775,
+    "effective_max": 0.1320,
+    "_note": "Rate = repo + spread. Spread varies by CIBIL/profile. Repo set by RBI - re-check monthly. Effective = repo+spread at current repo 5.25%",
+    "_source": "HDFC home loan interest rate page (homeloans.hdfc.bank.in)",
+    "_confidence": "verified"
+  },
+  "foir_by_income_band": {
+    "_note": "FOIR cap varies by income - proprietary, DSA-gated",
+    "band_low": null,
+    "band_mid": null,
+    "band_high": null,
+    "_source": null,
+    "_confidence": "unknown"
+  },
+  "accepted_income_proofs": {
+    "salaried": ["3 months salary slips", "6 months bank statement", "Form 16 and IT returns"],
+    "self_employed_professional": ["ITR 2 years CA-attested", "P&L and balance sheet 2 years", "12 months bank statement"],
+    "self_employed_non_professional": ["ITR 2 years CA-attested", "P&L and balance sheet 2 years", "12 months bank statement"],
+    "_note": "HDFC checklist splits self-employed into professional and non-professional (same docs shown on their page). Schema split to match ICICI structure.",
+    "_source": "HDFC documents checklist page (homeloans.hdfc.bank.in)",
+    "_confidence": "verified"
+  },
+  "co_applicant_clubbing": {
+    "allowed_relationships": null,
+    "income_clubbing_pct": null,
+    "co_applicant_liabilities_included": null,
+    "must_be_co_owner": null,
+    "_note": "Key remediation lever for FOIR-bound buyers. Clubbing spouse/parent income raises FOIR base. Haircut % and allowed relationships are lender-specific - DSA-gated. Co-applicant's own EMIs usually also clubbed.",
+    "_source": null,
+    "_confidence": "unknown"
+  }
+}
