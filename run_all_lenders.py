@@ -5,6 +5,7 @@ from lender_engine import lender_sanction
 from fix_engine import get_fixes, compute_shortfall
 from processing_fee import get_processing_fee
 from borrower_input import collect_borrower
+from db_loader import load_lender_policies
 
 LENDER_FILES = [
     "lenders/hdfc.json",
@@ -20,19 +21,19 @@ DEFAULT_REGISTRATION_PCT = 0.01
 DEFAULT_REGISTRATION_CAP = 30000
 DEFAULT_GST_PCT = 0.0
 
-def load_lenders(filenames):
-    lenders = []
-    for filename in filenames:
-        try:
-            with open(filename) as f:
-                lenders.append(json.load(f))
-        except FileNotFoundError:
-            print("WARNING: lender file not found, skipping:", filename)
-        except json.JSONDecodeError as e:
-            print("WARNING: lender file has invalid JSON, skipping:", filename, "-", e)
-    if not lenders:
-        print("ERROR: no lender files could be loaded. Check the lenders/ folder.")
-    return lenders
+def load_lenders(filenames=None):
+    if filenames is not None and filenames != LENDER_FILES:
+        lenders = []
+        for filename in filenames:
+            try:
+                with open(filename) as f:
+                    lenders.append(json.load(f))
+            except FileNotFoundError:
+                print("WARNING: lender file not found, skipping:", filename)
+            except json.JSONDecodeError as e:
+                print("WARNING: lender file has invalid JSON, skipping:", filename, "-", e)
+        return lenders
+    return load_lender_policies(use_cloud=True)
 
 def run_all_lenders(borrower, lender_jsons):
     results = []
